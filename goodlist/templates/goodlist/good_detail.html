@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ good.base_good.category }} {{ good.base_good.brand }} - {{ block.super }}
+{% endblock %}
+
+
+{% block body %}
+<div class="container row">
+  <div class="col text-center">
+    <div class="h3">
+      <a href="{{ good.base_good.category.get_absolute_url }}">
+        {{ good.base_good.category }}
+      </a>
+    </div>
+    <div class="h5">
+      <a href="{{ good.base_good.brand.get_absolute_url }}">
+        {{ good.base_good.brand.name }}
+      </a>
+    </div>
+    <div class="row">
+      {% for mat in good.base_good.material.all %}
+        <div class="col">
+          {{ mat }}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="row">
+      {% for model in models %}
+      <div class="col">
+        <a href="{{ model.get_absolute_url }}">{{ model.color.name }}</a>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="h5">
+      {{ good.price }} $
+    </div>
+    <div class="row">
+      {% for size in good.sizes.all %}
+        <div class="col">
+          {{ size }}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="h6">
+      {{ good.base_good.description }}
+    </div>
+
+  </div>
+  <div class="col-8">
+  <div class="container">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        {% for image in good.images.all %}
+            <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+
+            <img class="d-block w-100" href="#" src="{{ image.image.url }}" alt="image">
+
+          </div>
+        {% endfor %}
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

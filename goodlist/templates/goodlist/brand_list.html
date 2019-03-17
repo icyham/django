@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Brands  - {{ block.super }}
+{% endblock %}
+
+
+{% block body %}
+<div class="container row">
+  {% for brand in brands %}
+  <div class="col text-center">
+    <a href="{{brand.get_absolute_url}}">{{brand.name}}</a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

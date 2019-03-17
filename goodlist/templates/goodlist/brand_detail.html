@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ brand.name }} - {{ block.super }}
+{% endblock %}
+
+{% block body %}
+  <div class="display-3 text-center">
+    {{ brand.name }}
+  </div>
+  <div class="container">
+
+
+  <div class="row">
+    {% for base_good in page.object_list %}
+    <div class="card text-center" style="width: 18rem;">
+      {% with base_good.models.all|first as model %}
+      {% with model.images.all|first as image %}
+      <img class="card-img-top" src="{{ image.image.url }}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{ base_good.category.name }}</h5>
+        <p class="card-text">{{ base_good.description }}</p>
+        <a href="{{ model.get_absolute_url }}" class="btn btn-primary">Хочу</a>
+      </div>
+      {% endwith %}
+      {% endwith %}
+    </div>
+    {% endfor %}
+  </div>
+  </div>
+{% if is_paginated %}
+<div class="container mx-auto mt-4">
+  <nav aria-label="Brand goods pages">
+    <ul class="pagination justify-content-center">
+      <li class="page-item {% if not prev %} disabled {% endif %}"><a class="page-link" href="{{ prev }}">Previous</a></li>
+      {% for n in page.paginator.page_range %}
+      {% if n > page.number|add:-4 and n < page.number|add:4 %}
+      <li class="page-item {% if page.number == n %} active {% endif %}"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+      {% endif %}
+      {% endfor %}
+      <li class="page-item {% if not next %} disabled {% endif %}"><a class="page-link" href="{{ next }}">Next</a></li>
+    </ul>
+  </nav>
+</div>
+{% endif %}
+
+{% endblock %}
